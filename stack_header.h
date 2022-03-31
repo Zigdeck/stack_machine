@@ -20,7 +20,7 @@ struct Stack_Control{
 // Inicializa a pilha.
 ptSTCK* Initialize_Stack(ptCNTL* ptControl);
 // Coloca um elemento no topo da pilha.
-ptSTCK* Push(ptSTCK* ptStack, ptCNTL* ptControl,int num);
+ptSTCK* Push(ptSTCK* ptStack, ptCNTL* ptControl, short int num);
 // Retira o elemento do topo da lista.
 ptSTCK* Pop(ptSTCK* ptStack, ptCNTL* ptControl);
 
