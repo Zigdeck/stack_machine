@@ -18,7 +18,7 @@ struct Stack_Control{
 };
 
 // Inicializa a pilha.
-ptSTCK* Initialize_Stack(ptCNTL* ptControl);
+ptSTCK* Initialize_Stack();
 // Coloca um elemento no topo da pilha.
 ptSTCK* Push(ptSTCK* ptStack, ptCNTL* ptControl, short int num);
 // Retira o elemento do topo da lista.
@@ -38,13 +38,13 @@ ptSTCK* Mod(ptSTCK* ptStack, ptCNTL* ptControl);
 
 // Instruções que possuem parâmetro (apenas um operando).
 // Inverte os bits do elemento no topo da pilha.
-ptSTCK* Not(ptSTCK* ptStack);
+ptSTCK* Not(ptSTCK* ptStack, ptCNTL* ptControl);
 // Realiza um OR com os bits do número armazenado no topo da pilha.
-ptSTCK* Or(ptSTCK* ptStack);
+ptSTCK* Or(ptSTCK* ptStack, ptCNTL* ptControl);
 // Realiza um AND com os bits do número armazenado no topo da pilha.
-ptSTCK* And(ptSTCK* ptStack);
+ptSTCK* And(ptSTCK* ptStack, ptCNTL* ptControl);
 // Espelha os bits do número armazenado no topo da pilha.
-ptSTCK* Mir(ptSTCK* ptStack);
+ptSTCK* Mir(ptSTCK* ptStack, ptCNTL* ptControl);
 
 // Printa na tela o valor no topo da pilha.
 void Output(ptSTCK* ptStack);

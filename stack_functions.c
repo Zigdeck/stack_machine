@@ -3,25 +3,18 @@
 #include "stack_header.h"
 
 // Inicializa a pilha e retorna NULL.
-ptSTCK* Initialize_Stack(ptCNTL* ptControl){
+ptSTCK* Initialize_Stack(){
     return NULL;
 }
 
 // Aloca um elemento no topo da pilha.
 ptSTCK* Push(ptSTCK* ptStack, ptCNTL* ptControl, short int num){
     ptSTCK *new, *ptAux = ptStack;
-    new = (ptSTCK*) malloc(sizeof(ptSTCK));
-
-    // Caso o elemento a ser inserido na pilha seja do registrador $R.
-    if (num == NULL){
-        num = ptControl->reg;
-    }
-    else {
-    new->top = num;
-    }
+    new = (ptSTCK*) malloc(sizeof(ptSTCK));   
+    new->top = num;   
 
     // Testa se a pilha já esta cheia.
-    if(ptControl->counter >= 128){
+    if(ptControl->counter >= (128)){        
         printf("\nThe stack if full.\n");
         return ptStack;
     }
@@ -54,47 +47,180 @@ ptSTCK* Push(ptSTCK* ptStack, ptCNTL* ptControl, short int num){
 ptSTCK* Pop(ptSTCK* ptStack, ptCNTL* ptControl){
     ptSTCK *ptAux = ptStack;
     // Testa se a pilha está vazia.
-    if (ptAux->top == NULL){
+    if (ptAux == NULL){
         printf("\nThe stack is empty.\n");
-        return;
+        return ptStack;
     }
     // Se não, percorre ela até o final.
     else{
-        while(ptAux->next != NULL){
+        while(ptAux->next->next != NULL){
             ptAux = ptAux->next;
         }        
         // Desaloca o último elemento da pilha.
-        free(ptAux);
+        free(ptAux->next);
+        ptAux->next = NULL;
         ptControl->counter = ptControl->counter - 1;
+    }
+    return ptStack;
+}
+
+// Instruções que não possuem parâmetro.
+// Soma os dois elementos do topo da pilha e armazena o resultado em $R
+ptSTCK* Add(ptSTCK* ptStack, ptCNTL* ptControl){
+    ptSTCK *ptAux = ptStack;
+
+    if(ptControl->counter < 2){
+        printf("\nNot enough parameters on the stack.\n");
+    }
+    else{
+        // Percorre ela até o final da pilha.
+        while(ptAux->next->next != NULL){
+            ptAux = ptAux->next;
+        }
+        // Soma os dois elementos e armazena no registrador $R.
+        ptControl->reg = ptAux->top;
+        ptControl->reg = ptControl->reg + ptAux->next->top;
     }
 }
 
-ptSTCK* Add(ptSTCK* ptStack, ptCNTL* ptControl){
-
-}
+// Subtrai os dois elementos do topo da pilha e armazena o resultado em $R
 ptSTCK* Sub(ptSTCK* ptStack, ptCNTL* ptControl){
+    ptSTCK *ptAux = ptStack;
 
+    if(ptControl->counter < 2){
+        printf("\nNot enough parameters on the stack.\n");
+    }
+    else{
+        // Percorre ela até o final da pilha.
+        while(ptAux->next->next != NULL){
+            ptAux = ptAux->next;
+        }
+        // Subtrai os dois elementos e armazena no registrador $R.
+        ptControl->reg = ptAux->next->top;
+        ptControl->reg = ptControl->reg - ptAux->top;
+    }
 }
+
+// Multiplica os dois elementos do topo da pilha e armazena o resultado em $R
 ptSTCK* Mul(ptSTCK* ptStack, ptCNTL* ptControl){
+    ptSTCK *ptAux = ptStack;
 
+    if(ptControl->counter < 2){
+        printf("\nNot enough parameters on the stack.\n");
+    }
+    else{
+        // Percorre ela até o final da pilha.
+        while(ptAux->next->next != NULL){
+            ptAux = ptAux->next;
+        }
+        // Multiplica os dois elementos e armazena no registrador $R.
+        ptControl->reg = ptAux->top;
+        ptControl->reg = ptControl->reg * ptAux->next->top;
+    }
 }
+
+// Divide os dois elementos do topo da pilha e armazena o resultado em $R
 ptSTCK* Div(ptSTCK* ptStack, ptCNTL* ptControl){
+    ptSTCK *ptAux = ptStack;
 
+    if(ptControl->counter < 2){
+        printf("\nNot enough parameters on the stack.\n");
+    }
+    else{
+        // Percorre ela até o final da pilha.
+        while(ptAux->next->next != NULL){
+            ptAux = ptAux->next;
+        }
+        // Divide os dois elementos e armazena no registrador $R.
+        if(ptAux->top == 0){
+            printf("\nZero in the denominator.\n");
+        }
+        else{
+            ptControl->reg = ptAux->next->top;
+            ptControl->reg = ptControl->reg / ptAux->top;
+        }
+    }
 }
+
+// Divide os dois elementos do topo da pilha e armazena o resto da divisão em $R
 ptSTCK* Mod(ptSTCK* ptStack, ptCNTL* ptControl){
+    ptSTCK *ptAux = ptStack;
 
+    if(ptControl->counter < 2){
+        printf("\nNot enough parameters on the stack.\n");
+    }
+    else{
+        // Percorre ela até o final da pilha.
+        while(ptAux->next->next != NULL){
+            ptAux = ptAux->next;
+        }
+        // Calcula o resto da divisão dois elementos e armazena no registrador $R.
+        if(ptAux->top == 0){
+            printf("\nZero in the denominator.\n");
+        }
+        else{
+            ptControl->reg = ptAux->next->top;
+            ptControl->reg = ptControl->reg % ptAux->top;
+        }
+    }
 }
 
-ptSTCK* Not(ptSTCK* ptStack){
+// Instruções que possuem parâmetro (apenas um operando).
+// Inverte os bits do elemento no topo da pilha.
+ptSTCK* Not(ptSTCK* ptStack, ptCNTL* ptControl){
+    ptSTCK *ptAux = ptStack;
 
+    if(ptAux == NULL){
+        printf("\nNot enough parameters on the stack.\n");
+    }
+    else{
+        // Percorre ela até o final da pilha.
+        while(ptAux->next != NULL){
+            ptAux = ptAux->next;
+        }
+        // Calcula o NOT do topo da pilha e coloca no registrador $R.       
+        ptControl->reg = ~ptAux->top;       
+    }
 }
-ptSTCK* Or(ptSTCK* ptStack){
 
-}
-ptSTCK* And(ptSTCK* ptStack){
+// Realiza um OR com os bits do número armazenado no topo da pilha.
+ptSTCK* Or(ptSTCK* ptStack, ptCNTL* ptControl){
+    ptSTCK *ptAux = ptStack;
 
+    if(ptAux == NULL){
+        printf("\nNot enough parameters on the stack.\n");
+    }
+    else{
+        // Percorre ela até o final da pilha.
+        while(ptAux->next->next != NULL){
+            ptAux = ptAux->next;
+        }
+        // Calcula o OR do topo da pilha e coloca no registrador $R.       
+        ptControl->reg = ptAux->top;
+        ptControl->reg = ptControl->reg | ptAux->next->top;       
+    }
 }
-ptSTCK* Mir(ptSTCK* ptStack){
+
+// Realiza um AND com os bits do número armazenado no topo da pilha.
+ptSTCK* And(ptSTCK* ptStack, ptCNTL* ptControl){
+    ptSTCK *ptAux = ptStack;
+
+    if(ptAux == NULL){
+        printf("\nNot enough parameters on the stack.\n");
+    }
+    else{
+        // Percorre ela até o final da pilha.
+        while(ptAux->next->next != NULL){
+            ptAux = ptAux->next;
+        }
+        // Calcula o AND do topo da pilha e coloca no registrador $R.       
+        ptControl->reg = ptAux->top;
+        ptControl->reg = ptControl->reg & ptAux->next->top;       
+    }
+}
+
+// Espelha os bits do número armazenado no topo da pilha.
+ptSTCK* Mir(ptSTCK* ptStack, ptCNTL* ptControl){
 
 }
 

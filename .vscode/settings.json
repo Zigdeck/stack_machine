@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "stack_header.h": "c",
+        "stdlib.h": "c"
+    }
+}
