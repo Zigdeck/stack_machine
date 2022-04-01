@@ -51,6 +51,11 @@ ptSTCK* Pop(ptSTCK* ptStack, ptCNTL* ptControl){
         printf("\nThe stack is empty.\n");
         return ptStack;
     }
+    // Caso tenha apenas um elemento.
+    else if (ptAux->next == NULL){
+        ptStack = Clear(ptStack, ptControl);
+        return ptStack;
+    }
     // Se não, percorre ela até o final.
     else{
         while(ptAux->next->next != NULL){
@@ -226,31 +231,34 @@ ptSTCK* Mir(ptSTCK* ptStack, ptCNTL* ptControl){
 
 // Imprime o topo da pilha na tela.
 void Output(ptSTCK* ptStack){
-    ptSTCK *ptAux;
+    ptSTCK* ptAux = ptStack;
     // Testa se a pilha está vazia.
-    if (ptStack == NULL){
+    if (ptAux == NULL){
         printf("\n Empty stack. \n");
     }
     else{
         // Percorre a pilha até o topo.
-        for(ptAux = ptStack; ptAux != NULL; ptAux = ptAux->next){            
-        }
+        while(ptAux->next != NULL){
+        ptAux = ptAux->next;
+        } 
         // Imprime o topo da pilha.
-        printf(" %d", ptStack->top);
+        printf("\n%d", ptAux->top);        
     }    
 }
 
 // Destroí a pilha e limpa a memória alocada.
-ptSTCK* Clear(ptSTCK* ptStack){
+ptSTCK* Clear(ptSTCK* ptStack, ptCNTL* ptControl){
     ptSTCK *ptAux;
     // Enquanto a pilha não estiver vazia...
     while (ptStack != NULL) {
         ptAux = ptStack;
         ptStack = ptStack->next;
-        printf(" -  %d ",ptAux->top);
         // Desaloca a memória.
         free(ptAux);
+        ptControl->counter = ptControl->counter - 1;
     }
+    // Inicializa uma pilha nova com PC apontado para 0...
+    ptStack = Initialize_Stack();
     // Após desalocar a memória, retorna NULL.
-    return NULL;
+    return ptStack;
 }

@@ -9,28 +9,17 @@ int main(void){
 
     // TESTANDO COISAS
     short int num;
-    ptControl->counter = 0;
+    ptStack = Initialize_Stack();
 
-    ptStack = Initialize_Stack();    
-
-    printf("\nEnter a number.\n");
-    scanf("%d", &num);
-
-    ptStack = Push(ptStack, ptControl, num);
-    num += 4;
-    ptStack = Push(ptStack, ptControl, num);
-    num += 3;
-    ptStack = Push(ptStack, ptControl, num);
-    ptStack = Pop(ptStack, ptControl); 
-    
-    ptSTCK* ptAux = ptStack;
- 
-    while(ptAux != NULL){
-        printf("\n%d", ptAux->top);
-        ptAux = ptAux->next;
-    }
-    // Deletar aqui em cima depois 
-
+    // Teste com o programa do sor...
+    ptStack = Clear(ptStack, ptControl);
+    ptStack = Push(ptStack, ptControl, 4);
+    ptStack = Push(ptStack, ptControl, 8);
+    Add(ptStack, ptControl);
+    ptStack = Pop(ptStack, ptControl);
+    ptStack = Pop(ptStack, ptControl);
+    ptStack = Push(ptStack, ptControl, ptControl->reg);
+    Output(ptStack);
 
     /*
     Implementar as funções de leitura do arquivo, fechamento e execução do algoritmo.

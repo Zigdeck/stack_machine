@@ -50,4 +50,4 @@ ptSTCK* Mir(ptSTCK* ptStack, ptCNTL* ptControl);
 void Output(ptSTCK* ptStack);
 
 // Destroí a pilha e limpa a memória.
-ptSTCK* Clear(ptSTCK* ptStack);
+ptSTCK* Clear(ptSTCK* ptStack, ptCNTL* ptControl);
