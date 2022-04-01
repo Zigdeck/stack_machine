@@ -5,10 +5,10 @@ O código será implementado em C.
 
 # Comandos para compilar no Visual Studio (C)
 
-Compila o arquivo: `gcc -c nome.c`
+Compila o arquivo: `gcc -c stack_functions.c`
 
-Compila a main: `gcc -c main.c`
+Compila a main: `gcc -c stack_main.c`
 
-Cria o executável do programa: `gcc -o nomeexecutavel nome.o main.o` 
+Cria o executável do programa: `gcc -o stack stack_functions.o stack_main.o` 
 
-Executa o programa: `/nomeexecutavel` 
+Executa o programa: `.\\stack.exe` 
