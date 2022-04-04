@@ -211,7 +211,7 @@ ptSTCK* Mir(ptSTCK* ptStack, ptCNTL* ptControl){
             i++;
             num = num / 2;
         }
-        // percorrendo o vetor do menor indice para o menor e elevando 2 à posição correspondente
+        // percorrendo o vetor do menor indice para o maior e elevando 2 à posição correspondente
         // se está na posição 0, 2^i-0 / se está na posição 1, 2^i-1 ...
         for (j = 0; j < i; j++)
         {
