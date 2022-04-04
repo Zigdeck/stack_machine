@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "stack_header.h"
 
 // Inicializa a pilha e retorna NULL.
@@ -185,6 +186,41 @@ ptSTCK* Not(ptSTCK* ptStack, ptCNTL* ptControl){
         }
         // Calcula o NOT do topo da pilha e coloca no registrador $R.       
         ptControl->reg = ~ptAux->top;       
+    }
+}
+
+// Espelha os bits do elemento no topo da pilha
+ptSTCK* Mir(ptSTCK* ptStack, ptCNTL* ptControl){
+    int vet_bin[50];
+    int i = 0, j;
+    num_saida = 0
+
+    ptSTCK *ptAux = ptStack;
+
+    if(ptAux == NULL){
+        printf("\nNot enough parameters on the stack.\n");
+    }
+    else{
+        while(ptAux->next != NULL){
+            ptAux = ptAux->next;
+        }
+        // transforma o numero do topo em binário => exemplo: 6(dec) = 110(bin) => vet_bin = [0, 1, 1]
+        while (ptAux->top > 0)
+        {
+            vet_bin[i] = num % 2;
+            i++;
+            num = num / 2;
+        }
+        // percorrendo o vetor do menor indice para o menor e elevando 2 à posição correspondente
+        // se está na posição 0, 2^i-0 / se está na posição 1, 2^i-1 ...
+        for (j = 0; j < i; j++)
+        {
+            if (vet_bin[j] == 1)
+            {
+                num_saida = num_saida + pow(2, i-j-1);
+            }
+        }
+        ptControl->reg = num_saida;
     }
 }
 
