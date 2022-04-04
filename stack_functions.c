@@ -193,7 +193,8 @@ ptSTCK* Not(ptSTCK* ptStack, ptCNTL* ptControl){
 ptSTCK* Mir(ptSTCK* ptStack, ptCNTL* ptControl){
     int vet_bin[50];
     int i = 0, j;
-    num_saida = 0
+    int num_saida = 0;
+    int num;
 
     ptSTCK *ptAux = ptStack;
 
@@ -205,7 +206,8 @@ ptSTCK* Mir(ptSTCK* ptStack, ptCNTL* ptControl){
             ptAux = ptAux->next;
         }
         // transforma o numero do topo em binário => exemplo: 6(dec) = 110(bin) => vet_bin = [0, 1, 1]
-        while (ptAux->top > 0)
+        num = ptAux->top;
+        while (num > 0)
         {
             vet_bin[i] = num % 2;
             i++;
